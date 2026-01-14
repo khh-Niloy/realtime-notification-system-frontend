@@ -28,7 +28,7 @@ export const Login = () => {
   type LoginSchema = z.infer<typeof loginSchema>;
 
   const handleAutoLogin = async (email: string) => {
-    await onSubmit({ email, password: "password123" });
+    await onSubmit({ email, password: "12345678" });
   };
 
   const onSubmit = async (data: LoginSchema) => {
@@ -168,7 +168,7 @@ export const Login = () => {
           <div className="grid grid-cols-2 gap-3">
             {[
               { name: "Admin", email: "khhniloy0@gmail.com" },
-              { name: "User", email: "khhniloy0@gmail.com" },
+              { name: "User", email: "niloy.dev.101@gmail.com" },
             ].map((demo) => (
               <button
                 key={demo.name}
