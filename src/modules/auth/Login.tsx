@@ -1,5 +1,216 @@
-import React from "react";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Bell, Eye, EyeOff, ArrowLeft, User, Shield } from "lucide-react";
+import loginBg from "@/assets/images/login.jpg";
+import { z } from "zod";
+import { useLoginMutation } from "@/redux/features/auth/auth.api";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export const Login = () => {
-  return <div>Login</div>;
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [loginUser, { isLoading }] = useLoginMutation();
+
+  const loginSchema = z.object({
+    email: z.string().email("Please enter a valid email address"),
+    password: z.string().min(8, "Password must be at least 8 characters long"),
+  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginSchema>({
+    resolver: zodResolver(loginSchema),
+  });
+
+  type LoginSchema = z.infer<typeof loginSchema>;
+
+  const handleAutoLogin = async (email: string) => {
+    await onSubmit({ email, password: "12345678" });
+  };
+
+  const onSubmit = async (data: LoginSchema) => {
+    try {
+      const res = await loginUser(data).unwrap();
+      if (res.success) {
+        toast.success("Logged in successfully");
+      }
+      navigate("/");
+    } catch (error: any) {
+      toast.error(
+        error.data?.message || "Login failed. Please check your credentials."
+      );
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex">
+      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-gradient-to-br from-gray-900 via-black to-gray-800">
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-60"
+          style={{
+            backgroundImage: `url(${loginBg})`,
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-black/50 via-gray-900/30 to-transparent" />
+        <div className="relative z-10 flex flex-col items-center justify-center h-full p-12 text-white text-center">
+          <Link
+            to="/"
+            className="absolute top-12 left-12 flex items-center gap-2 group"
+          >
+            <div className="relative">
+              <div className="absolute inset-0 bg-white rounded-lg blur-md opacity-50 group-hover:opacity-75 transition-opacity"></div>
+              <div className="relative bg-white p-2.5 rounded-lg">
+                <Bell className="w-6 h-6 text-black" />
+              </div>
+            </div>
+            <span className="text-2xl font-bold">NotifyHub</span>
+          </Link>
+        </div>
+      </div>
+
+      <div className="flex-1 flex items-center justify-center p-8 bg-background">
+        <div className="w-full max-w-md space-y-8">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Home
+          </Link>
+
+          <div className="space-y-2">
+            <h2 className="text-3xl font-bold text-foreground">Login</h2>
+            <p className="text-muted-foreground">
+              Enter your credentials to access your account.
+            </p>
+          </div>
+
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <div className="space-y-2">
+              <label
+                htmlFor="email"
+                className="text-sm font-medium text-foreground"
+              >
+                EMAIL
+              </label>
+              <input
+                id="email"
+                type="email"
+                placeholder="m@example.com"
+                {...register("email")}
+                className="w-full px-4 py-3 rounded-lg bg-muted/50 border border-border focus:border-foreground focus:ring-2 focus:ring-foreground/20 outline-none transition-all"
+              />
+              {errors.email && (
+                <p className="text-sm text-red-500">{errors.email.message}</p>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <label
+                  htmlFor="password"
+                  className="text-sm font-medium text-foreground"
+                >
+                  PASSWORD
+                </label>
+              </div>
+              <div className="relative">
+                <input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="••••••••"
+                  {...register("password")}
+                  className="w-full px-4 py-3 rounded-lg bg-muted/50 border border-border focus:border-foreground focus:ring-2 focus:ring-foreground/20 outline-none transition-all"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {showPassword ? (
+                    <EyeOff className="w-5 h-5" />
+                  ) : (
+                    <Eye className="w-5 h-5" />
+                  )}
+                </button>
+              </div>
+              {errors.password && (
+                <p className="text-sm text-red-500">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full py-3 rounded-lg font-semibold text-white bg-black hover:bg-gray-800 transition-all duration-300 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isLoading ? "Logging in..." : "Continue"}
+            </button>
+          </form>
+
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-border"></div>
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-background px-2 text-muted-foreground">
+                Demo Access
+              </span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            {[
+              { name: "Admin", email: "khhniloy0@gmail.com" },
+              { name: "User", email: "niloy.dev.101@gmail.com" },
+            ].map((demo) => (
+              <button
+                key={demo.name}
+                type="button"
+                onClick={() => handleAutoLogin(demo.email)}
+                className="py-3 px-2 border border-blue-50 bg-blue-50/30 text-black rounded-xl text-[10px] font-black uppercase tracking-wider hover:bg-[#4088FD] hover:text-white transition-all active:scale-95 shadow-sm"
+              >
+                {demo.name}
+              </button>
+            ))}
+          </div>
+
+          {/* Sign Up Link */}
+          <p className="text-center text-sm text-muted-foreground">
+            New to NotifyHub?{" "}
+            <Link
+              to="/register"
+              className="text-foreground hover:underline font-medium transition-colors"
+            >
+              Create account
+            </Link>
+          </p>
+
+          {/* Terms */}
+          <p className="text-xs text-center text-muted-foreground">
+            By continuing, you agree to our{" "}
+            <Link
+              to="#"
+              className="underline hover:text-foreground transition-colors"
+            >
+              Terms
+            </Link>{" "}
+            and{" "}
+            <Link
+              to="#"
+              className="underline hover:text-foreground transition-colors"
+            >
+              Privacy Policy
+            </Link>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
 };
