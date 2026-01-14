@@ -132,7 +132,7 @@ export const NotificationsFeed = () => {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3 mb-2">
                     <span
-                      className={`text-[10px] font-black uppercase tracking-[0.2em] transition-colors duration-500 ${
+                      className={`text-[10px] font-bold uppercase tracking-[0.2em] transition-colors duration-500 ${
                         isRead
                           ? "text-muted-foreground/30"
                           : "text-foreground/50"
@@ -187,7 +187,7 @@ export const NotificationsFeed = () => {
         ) : (
           <div className="py-32 flex flex-col items-center justify-center text-center bg-muted/5 rounded-[3rem] border border-dashed border-border/40">
             <Bell className="w-12 h-12 text-muted-foreground/20 mb-6" />
-            <h3 className="text-2xl font-black text-foreground uppercase tracking-tighter">
+            <h3 className="text-2xl font-bold text-foreground uppercase tracking-tighter">
               Quiet Zone
             </h3>
             <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground max-w-[200px] mt-2">

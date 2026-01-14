@@ -1,13 +1,26 @@
-import { useGetAllNotificationQuery } from "@/redux/features/notification/notification.api";
+import {
+  useGetAllNotificationQuery,
+  useDeleteNotificationMutation,
+} from "@/redux/features/notification/notification.api";
 import { categoryIcons, categoryIconColors } from "@/components/CategoryCard";
 import { Bell, Plus, Edit2, Trash2, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import toast from "react-hot-toast";
 
 export const NotificationList = () => {
   const { data: notifications, isLoading } =
     useGetAllNotificationQuery(undefined);
-  console.log(notifications);
+  const [deleteNotification] = useDeleteNotificationMutation();
+
+  const handleDeletion = async (id: string) => {
+    try {
+      await deleteNotification(id).unwrap();
+      toast.success("Notification deleted successfully");
+    } catch (error) {
+      toast.error("Failed to delete notification");
+    }
+  };
 
   if (isLoading) {
     return (
@@ -25,7 +38,7 @@ export const NotificationList = () => {
       {/* Header Section */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div className="space-y-1">
-          <h2 className="text-4xl font-black tracking-tight text-foreground uppercase">
+          <h2 className="text-4xl font-bold tracking-tight text-foreground uppercase">
             Management
           </h2>
           <p className="text-sm font-medium text-muted-foreground uppercase tracking-widest">
@@ -33,9 +46,6 @@ export const NotificationList = () => {
           </p>
         </div>
         <div className="flex items-center gap-4">
-          <div className="hidden md:flex h-12 items-center px-6 bg-muted/30 border border-border/50 rounded-2xl font-black uppercase tracking-tighter text-xs">
-            Total: {notifications?.length || 0} Broadcasts
-          </div>
           <Link to="/admin/create-notification">
             <Button className="rounded-2xl h-12 px-6 gap-2 font-bold shadow-xl shadow-foreground/10 hover:shadow-foreground/20 transition-all active:scale-95">
               <Plus className="w-5 h-5" />
@@ -51,16 +61,16 @@ export const NotificationList = () => {
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="border-b border-border/50 bg-muted/20">
-                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-muted-foreground">
+                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
                   Category
                 </th>
-                <th className="px-6 py-5 text-[10px] font-black uppercase tracking-widest text-muted-foreground">
+                <th className="px-6 py-5 text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
                   Details
                 </th>
-                <th className="px-6 py-5 text-[10px] font-black uppercase tracking-widest text-muted-foreground">
+                <th className="px-6 py-5 text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
                   Date Created
                 </th>
-                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-muted-foreground text-right">
+                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-muted-foreground text-right">
                   Actions
                 </th>
               </tr>
@@ -83,7 +93,7 @@ export const NotificationList = () => {
                           >
                             <Icon className="w-5 h-5" />
                           </div>
-                          <span className="text-xs font-black uppercase tracking-wider text-foreground/70">
+                          <span className="text-xs font-bold uppercase tracking-wider text-foreground/70">
                             {item.category}
                           </span>
                         </div>
@@ -108,16 +118,19 @@ export const NotificationList = () => {
                       </td>
                       <td className="px-8 py-6 text-right">
                         <div className="flex items-center justify-end gap-2 transition-opacity">
+                          <Link to={`/admin/edit-notification/${item._id}`}>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="w-9 h-9 rounded-xl hover:bg-background hover:shadow-md cursor-pointer"
+                            >
+                              <Edit2 className="w-4 h-4" />
+                            </Button>
+                          </Link>
                           <Button
                             variant="ghost"
                             size="icon"
-                            className="w-9 h-9 rounded-xl hover:bg-background hover:shadow-md cursor-pointer"
-                          >
-                            <Edit2 className="w-4 h-4" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="icon"
+                            onClick={() => handleDeletion(item._id)}
                             className="w-9 h-9 rounded-xl text-destructive hover:bg-destructive/10 cursor-pointer"
                           >
                             <Trash2 className="w-4 h-4" />
