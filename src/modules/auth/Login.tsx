@@ -175,7 +175,7 @@ export const Login = () => {
                 key={demo.name}
                 type="button"
                 onClick={() => handleAutoLogin(demo.email)}
-                className="py-3 px-2 border border-blue-50 bg-blue-50/30 text-black rounded-xl text-[10px] font-black uppercase tracking-wider hover:bg-[#4088FD] hover:text-white transition-all active:scale-95 shadow-sm"
+                className="py-3 px-2 border border-blue-50 bg-blue-50/30 text-black rounded-xl text-[10px] font-bold uppercase tracking-wider hover:bg-[#4088FD] hover:text-white transition-all active:scale-95 shadow-sm"
               >
                 {demo.name}
               </button>
