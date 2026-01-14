@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Bell, Menu, X } from "lucide-react";
 import {
@@ -7,6 +7,8 @@ import {
   useUserInfoQuery,
 } from "@/redux/features/auth/auth.api";
 import { useAppDispatch } from "@/redux/hooks";
+import { Button } from "../ui/button";
+import { socket } from "@/lib/socket";
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -50,11 +52,19 @@ export const Navbar = () => {
     try {
       await logout(undefined).unwrap();
       dispatch(authApi.util.resetApiState());
+      socket.disconnect();
       navigate("/");
     } catch (error) {
       console.error("Logout failed:", error);
     }
   };
+
+  useEffect(() => {
+    if (me?._id) {
+      socket.connect();
+      socket.emit("register", me._id);
+    }
+  }, [me?._id]);
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/40">
@@ -120,17 +130,14 @@ export const Navbar = () => {
               </>
             ) : (
               <>
-                <Link
-                  to="/login"
-                  className="px-4 py-2 rounded-lg font-medium text-foreground hover:bg-accent/50 transition-all duration-300"
-                >
-                  Login
+                <Link to="/login">
+                  <Button variant="outline" className="cursor-pointer">
+                    Login
+                  </Button>
                 </Link>
-                <Link
-                  to="/register"
-                  className="relative px-6 py-2 rounded-lg font-medium text-white bg-black hover:bg-gray-800 transition-all duration-300"
-                >
-                  <span className="relative z-10">Register</span>
+
+                <Link to="/register">
+                  <Button className="cursor-pointer">Register</Button>
                 </Link>
               </>
             )}

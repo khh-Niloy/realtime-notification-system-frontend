@@ -11,7 +11,15 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ReduxProvider store={store}>
       <RouterProvider router={router} />
-      <Toaster position="top-center" reverseOrder={false} />
+      <Toaster
+        containerStyle={{
+          top: 80, // Precision: exactly 40px from top
+          right: 10, // Precision: exactly 40px from right
+          left: 40, // Optional: relative distance
+          bottom: 40,
+        }}
+        reverseOrder={false}
+      />
     </ReduxProvider>
   </StrictMode>
 );

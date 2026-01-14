@@ -7,6 +7,7 @@ import { useLoginMutation } from "@/redux/features/auth/auth.api";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { socket } from "@/lib/socket";
 
 export const Login = () => {
   const navigate = useNavigate();
