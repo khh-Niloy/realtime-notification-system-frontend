@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Bell, Eye, EyeOff, ArrowLeft, User, Shield } from "lucide-react";
+import { Bell, Eye, EyeOff, ArrowLeft } from "lucide-react";
 import loginBg from "@/assets/images/login.jpg";
 import { z } from "zod";
 import { useLoginMutation } from "@/redux/features/auth/auth.api";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { socket } from "@/lib/socket";
 
 export const Login = () => {
   const navigate = useNavigate();

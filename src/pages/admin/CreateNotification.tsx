@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { SubscriptionsCategories } from "@/constant/subscriptionArr";
 import toast from "react-hot-toast";
-import { ArrowLeft, BellRing, Send } from "lucide-react";
+import { ArrowLeft, BellRing } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
