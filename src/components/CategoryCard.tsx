@@ -1,26 +1,13 @@
-import { Bell, Megaphone, ListTodo } from "lucide-react";
+import { Bell } from "lucide-react";
 import {
   useSubscribeMutation,
   useUnsubscribeMutation,
 } from "@/redux/features/subscribe/subscribe.api";
-
-export const categoryIcons: Record<string, any> = {
-  system: Bell,
-  task: ListTodo,
-  announcement: Megaphone,
-};
-
-export const categoryColors: Record<string, string> = {
-  system: "bg-blue-50/80 dark:bg-blue-950/30",
-  task: "bg-purple-50/80 dark:bg-purple-950/30",
-  announcement: "bg-orange-50/80 dark:bg-orange-950/30",
-};
-
-export const categoryIconColors: Record<string, string> = {
-  system: "text-blue-500",
-  task: "text-purple-500",
-  announcement: "text-orange-500",
-};
+import {
+  categoryColors,
+  categoryIconColors,
+  categoryIcons,
+} from "@/constant/constValues";
 
 interface CategoryCardProps {
   category: string;

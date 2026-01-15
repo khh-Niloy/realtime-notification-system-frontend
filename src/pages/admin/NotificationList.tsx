@@ -2,11 +2,11 @@ import {
   useGetAllNotificationQuery,
   useDeleteNotificationMutation,
 } from "@/redux/features/notification/notification.api";
-import { categoryIcons, categoryIconColors } from "@/components/CategoryCard";
 import { Bell, Plus, Edit2, Trash2, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast";
+import { categoryIconColors, categoryIcons } from "@/constant/constValues";
 
 export const NotificationList = () => {
   const { data: notifications, isLoading } =

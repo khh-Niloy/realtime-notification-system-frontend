@@ -4,15 +4,15 @@ import { EditNotification } from "@/pages/admin/EditNotification";
 
 export const adminRoutes = [
   {
-    path: "/admin/create-notification",
+    path: "create-notification",
     Component: CreateNotification,
   },
   {
-    path: "/admin/notification-list",
+    path: "notification-list",
     Component: NotificationList,
   },
   {
-    path: "/admin/edit-notification/:id",
+    path: "edit-notification/:id",
     Component: EditNotification,
   },
 ];

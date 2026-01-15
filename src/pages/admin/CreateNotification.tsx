@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { SubscriptionsCategories } from "@/constant/subscriptionArr";
+import { SubscriptionsCategories } from "@/constant/constValues";
 import toast from "react-hot-toast";
 import { ArrowLeft, BellRing } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -49,7 +49,7 @@ export const CreateNotification = () => {
 
   const onSubmit = async (data: NotificationSchema) => {
     try {
-      console.log(data);
+      // console.log(data);
       socket.emit("send-notification", data);
       toast.success("Notification sent successfully!");
       navigate("/admin/notification-list");

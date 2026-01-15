@@ -1,4 +1,4 @@
-import { SubscriptionsCategories } from "@/constant/subscriptionArr";
+import { SubscriptionsCategories } from "@/constant/constValues";
 import { useUserInfoQuery } from "@/redux/features/auth/auth.api";
 import { useGetSubscriptionsQuery } from "@/redux/features/subscribe/subscribe.api";
 import { CategoryCard } from "@/components/CategoryCard";

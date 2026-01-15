@@ -15,14 +15,13 @@ export const authApi = baseApi.injectEndpoints({
         method: "GET",
       }),
       transformResponse: (response: any) => response.data,
-      // providesTags: ["USER"]
+      providesTags: ["User"],
     }),
     useLogout: builder.mutation({
       query: () => ({
         url: "/auth/logout",
         method: "POST",
       }),
-      // invalidatesTags: ["USER"],
     }),
   }),
 });

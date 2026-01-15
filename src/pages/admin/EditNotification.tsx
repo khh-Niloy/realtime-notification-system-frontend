@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { SubscriptionsCategories } from "@/constant/subscriptionArr";
+import { SubscriptionsCategories } from "@/constant/constValues";
 import toast from "react-hot-toast";
 import { ArrowLeft, Save, Edit, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -46,10 +46,7 @@ export const EditNotification = () => {
   const navigate = useNavigate();
 
   const { data: notification, isLoading } = useGetNotificationByIdQuery(
-    id as string,
-    {
-      skip: !id,
-    }
+    id as string
   );
 
   const form = useForm<NotificationSchema>({
@@ -74,7 +71,6 @@ export const EditNotification = () => {
   } = form;
 
   const onSubmit = async (data: NotificationSchema) => {
-    // Only send the fields that have been modified (dirtyFields)
     const updatedData = Object.keys(dirtyFields).reduce((acc: any, key) => {
       acc[key] = (data as any)[key];
       return acc;
@@ -86,7 +82,7 @@ export const EditNotification = () => {
     }
 
     try {
-      console.log("Updating fields:", updatedData);
+      // console.log("Updating fields:", updatedData);
       socket.emit("update-notification", { _id: id, ...updatedData });
       dispatch(notificationApi.util.invalidateTags(["Notifications"]));
       toast.success("Notification updated and broadcasted!");

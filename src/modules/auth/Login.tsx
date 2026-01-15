@@ -144,7 +144,6 @@ export const Login = () => {
               )}
             </div>
 
-            {/* Submit Button */}
             <button
               type="submit"
               disabled={isLoading}
@@ -159,16 +158,17 @@ export const Login = () => {
               <div className="w-full border-t border-border"></div>
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-muted-foreground">
-                Demo Access
+              <span className="bg-background px-2 text-blue-500 font-medium">
+                Quick Login
               </span>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-3 gap-3">
             {[
               { name: "Admin", email: "khhniloy0@gmail.com" },
-              { name: "User", email: "niloy.dev.101@gmail.com" },
+              { name: "User 1", email: "niloy.dev.101@gmail.com" },
+              { name: "User 2", email: "khhniloy01@gmail.com" },
             ].map((demo) => (
               <button
                 key={demo.name}
@@ -181,7 +181,6 @@ export const Login = () => {
             ))}
           </div>
 
-          {/* Sign Up Link */}
           <p className="text-center text-sm text-muted-foreground">
             New to NotifyHub?{" "}
             <Link
@@ -192,7 +191,6 @@ export const Login = () => {
             </Link>
           </p>
 
-          {/* Terms */}
           <p className="text-xs text-center text-muted-foreground">
             By continuing, you agree to our{" "}
             <Link
