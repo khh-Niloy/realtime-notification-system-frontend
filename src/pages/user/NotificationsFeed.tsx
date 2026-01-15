@@ -1,16 +1,16 @@
 import { socket } from "@/lib/socket";
 import { useEffect, useState } from "react";
-import {
-  categoryIcons,
-  categoryColors,
-  categoryIconColors,
-} from "@/components/CategoryCard";
 import { Bell, CheckCircle2 } from "lucide-react";
 import {
   useGetUserNotificationQuery,
   useMarkAsReadMutation,
 } from "@/redux/features/notification/notification.api";
 import toast from "react-hot-toast";
+import {
+  categoryColors,
+  categoryIconColors,
+  categoryIcons,
+} from "@/constant/constValues";
 
 export const NotificationsFeed = () => {
   const [notifications, setNotifications] = useState<any[]>([]);
@@ -34,8 +34,6 @@ export const NotificationsFeed = () => {
       const prevWithoutUpdate = prev.filter((notification) => {
         return notification.notificationId._id !== notificationId;
       });
-
-      console.log(prevWithoutUpdate);
 
       const existingMatchedNotification = prev.find(
         (notification) => notification.notificationId._id === notificationId
@@ -101,7 +99,6 @@ export const NotificationsFeed = () => {
       <div className="space-y-4">
         {notifications.length > 0 ? (
           notifications.map((item, index) => {
-            // Socket might send data differently than the DB pull (populated vs raw)
             const data = item.notificationId || item;
             const Icon = categoryIcons[data.category] || Bell;
             const isRead = item.isRead || false;

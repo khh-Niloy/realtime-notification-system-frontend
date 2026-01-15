@@ -13,9 +13,9 @@ createRoot(document.getElementById("root")!).render(
       <RouterProvider router={router} />
       <Toaster
         containerStyle={{
-          top: 80, // Precision: exactly 40px from top
-          right: 10, // Precision: exactly 40px from right
-          left: 40, // Optional: relative distance
+          top: 70,
+          right: 10,
+          left: 40,
           bottom: 40,
         }}
         reverseOrder={false}

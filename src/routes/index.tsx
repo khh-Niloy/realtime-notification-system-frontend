@@ -3,10 +3,11 @@ import Unauthorized from "@/components/Unauthorized";
 import { Login } from "@/modules/auth/Login";
 import { Register } from "@/modules/auth/Register";
 import { Home } from "@/modules/home/Home";
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter } from "react-router-dom";
 import { adminRoutes } from "./adminRoutes";
 import { userRoutes } from "./userRoutes";
-import { Navigate } from "react-router-dom";
+import { roleBasedCompo } from "@/middleware/roleBasedCompo";
+import { Role, type TRole } from "@/constant/constValues";
 
 export const router = createBrowserRouter([
   {
@@ -33,18 +34,12 @@ export const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    Component: App,
-    children: [
-      { index: true, element: <Navigate to="/admin/notification-list" /> },
-      ...adminRoutes,
-    ],
+    Component: roleBasedCompo(App, Role.admin as TRole),
+    children: [...adminRoutes],
   },
   {
     path: "/user",
-    Component: App,
-    children: [
-      { index: true, element: <Navigate to="/user/my-subscriptions" /> },
-      ...userRoutes,
-    ],
+    Component: roleBasedCompo(App, Role.user as TRole),
+    children: [...userRoutes],
   },
 ]);

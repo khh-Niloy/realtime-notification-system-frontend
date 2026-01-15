@@ -55,9 +55,7 @@ export const Register = () => {
 
   return (
     <div className="min-h-screen flex">
-      {/* Left Side - Image Section */}
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-gradient-to-br from-gray-900 via-black to-gray-800">
-        {/* Background Image */}
         <div
           className="absolute inset-0 bg-cover bg-center opacity-60"
           style={{
@@ -65,12 +63,9 @@ export const Register = () => {
           }}
         />
 
-        {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-br from-black/50 via-gray-900/30 to-transparent" />
 
-        {/* Content */}
         <div className="relative z-10 flex flex-col items-center justify-center h-full p-12 text-white text-center">
-          {/* Logo - Top */}
           <Link
             to="/"
             className="absolute top-12 left-12 flex items-center gap-2 group"
@@ -86,10 +81,8 @@ export const Register = () => {
         </div>
       </div>
 
-      {/* Right Side - Form Section */}
       <div className="flex-1 flex items-center justify-center p-8 bg-background">
         <div className="w-full max-w-md space-y-8">
-          {/* Back to Home */}
           <Link
             to="/"
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
@@ -98,7 +91,6 @@ export const Register = () => {
             Back to Home
           </Link>
 
-          {/* Header */}
           <div className="space-y-2">
             <h2 className="text-3xl font-bold text-foreground">
               Create Account
@@ -108,9 +100,7 @@ export const Register = () => {
             </p>
           </div>
 
-          {/* Form */}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            {/* Full Name Field */}
             <div className="space-y-2">
               <label
                 htmlFor="name"
@@ -130,7 +120,6 @@ export const Register = () => {
               )}
             </div>
 
-            {/* Email Field */}
             <div className="space-y-2">
               <label
                 htmlFor="email"
@@ -150,9 +139,7 @@ export const Register = () => {
               )}
             </div>
 
-            {/* Password Fields Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {/* Password Field */}
               <div className="space-y-2">
                 <label
                   htmlFor="password"
@@ -187,7 +174,6 @@ export const Register = () => {
                 )}
               </div>
 
-              {/* Confirm Password Field */}
               <div className="space-y-2">
                 <label
                   htmlFor="confirmPassword"

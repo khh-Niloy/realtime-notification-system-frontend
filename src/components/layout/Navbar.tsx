@@ -9,6 +9,7 @@ import {
 import { useAppDispatch } from "@/redux/hooks";
 import { Button } from "../ui/button";
 import { socket } from "@/lib/socket";
+import { getNavItems } from "@/utility/getNavItems";
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,32 +17,8 @@ export const Navbar = () => {
   const navigate = useNavigate();
 
   const { data: me } = useUserInfoQuery(undefined);
-  console.log(me);
-
-  const getNavItems = () => {
-    if (!me) {
-      return [{ name: "Home", link: "/" }];
-    }
-
-    switch (me.role?.toLowerCase()) {
-      case "user":
-        return [
-          { name: "Home", link: "/" },
-          { name: "My Subscriptions", link: "/user/my-subscriptions" },
-          { name: "Notifications Feed", link: "/user/notifications-feed" },
-        ];
-      case "admin":
-        return [
-          { name: "Home", link: "/" },
-          { name: "Create Notification", link: "/admin/create-notification" },
-          { name: "Notification List", link: "/admin/notification-list" },
-        ];
-      default:
-        return [{ name: "Home", link: "/" }];
-    }
-  };
-
-  const navItems = getNavItems();
+  // console.log(me);
+  const navItems = getNavItems(me);
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -70,7 +47,6 @@ export const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Mobile: Hamburger Menu (Left) */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="md:hidden p-2 rounded-lg hover:bg-accent/50 transition-colors"
@@ -83,7 +59,6 @@ export const Navbar = () => {
             )}
           </button>
 
-          {/* Desktop: Logo (Left) */}
           <Link
             to="/"
             className="hidden md:flex items-center gap-2 group transition-transform hover:scale-105"
@@ -97,7 +72,6 @@ export const Navbar = () => {
             <span className="text-xl font-bold text-foreground">NotifyHub</span>
           </Link>
 
-          {/* Desktop: Navigation Links (Center) */}
           <div className="hidden md:flex items-center gap-1">
             {navItems.map((link) => (
               <Link
@@ -117,7 +91,6 @@ export const Navbar = () => {
             ))}
           </div>
 
-          {/* Desktop: Auth Buttons (Right) */}
           <div className="hidden md:flex items-center gap-3">
             {me ? (
               <>
@@ -143,7 +116,6 @@ export const Navbar = () => {
             )}
           </div>
 
-          {/* Mobile: Logo (Right) */}
           <Link to="/" className="md:hidden flex items-center gap-2">
             <div className="relative">
               <div className="absolute inset-0 bg-gray-200 rounded-lg blur-sm opacity-75"></div>
@@ -156,7 +128,6 @@ export const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       <div
         className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
           isMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"

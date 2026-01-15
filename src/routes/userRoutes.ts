@@ -3,11 +3,11 @@ import { NotificationsFeed } from "@/pages/user/NotificationsFeed";
 
 export const userRoutes = [
   {
-    path: "/user/my-subscriptions",
+    path: "my-subscriptions",
     Component: MySubscriptions,
   },
   {
-    path: "/user/notifications-feed",
+    path: "notifications-feed",
     Component: NotificationsFeed,
   },
 ];
